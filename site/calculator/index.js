@@ -1,43 +1,16 @@
-/* eslint-disable no-shadow */
-/* eslint-disable default-case */
-// DOM
 const buttonNumbers = document.querySelectorAll('[data-type="number"]');
 const buttonClear = document.querySelector('[data-type="clear"]');
 const buttonNegate = document.querySelector('[data-type="negate"]');
 const buttonPercent = document.querySelector('[data-type="percent"]');
 const buttonOperators = document.querySelectorAll('[data-type="operator"]');
 const buttonEqual = document.querySelector('[data-type="equal"]');
-
-const screen = document.getElementById('screen');
-
-// STATE
-let currentOperation = null;
-let leftOperand = '';
-let rightOperand = '';
-let clearScreen = false;
-
-// DOM events
-buttonClear.addEventListener('click', resetCalculator);
-buttonNegate.addEventListener('click', negateNumber);
-buttonEqual.addEventListener('click', evaluate);
-buttonPercent.addEventListener('click', percent);
-
-buttonNumbers.forEach((btn) => {
-  btn.addEventListener('click', () => appendTextContent(btn.textContent));
-});
-
-buttonOperators.forEach((btn) => {
-  btn.addEventListener('click', (event) => {
-
 const screen = document.getElementById("screen");
 
-// STATE
 let currentOperation = null;
 let leftOperand = "";
 let rightOperand = "";
 let clearScreen = false;
 
-// DOM events
 buttonClear.addEventListener("click", resetCalculator);
 buttonNegate.addEventListener("click", negateNumber);
 buttonEqual.addEventListener("click", evaluate);
@@ -54,14 +27,6 @@ buttonOperators.forEach((btn) => {
   });
 });
 
-// HELPER functions
-
-const setDotToComma = (num) => num.toString().replace(/\./g, ',');
-
-function removeActive() {
-  buttonOperators.forEach((btn) => {
-    btn.classList.remove('active-operator');
-    
 const setDotToComma = (num) => num.toString().replace(/\./g, ",");
 
 function removeActive() {
@@ -71,13 +36,6 @@ function removeActive() {
 }
 
 function handleClick(btn, event) {
-  const active = document.querySelector('.active-operator');
-  if (active) active.classList.remove('active-operator');
-  event.currentTarget.classList.add('active-operator');
-}
-
-function percent() {
-  let num = Number.parseFloat(screen.textContent.replace(/,/g, '.'));
   const active = document.querySelector(".active-operator");
   if (active) active.classList.remove("active-operator");
   event.currentTarget.classList.add("active-operator");
@@ -90,13 +48,11 @@ function percent() {
 }
 
 function resetSCreen() {
-  screen.textContent = '';
   screen.textContent = "";
   clearScreen = false;
 }
 
 function appendTextContent(number) {
-  if (screen.textContent === '0' || clearScreen) resetSCreen();
   if (screen.textContent === "0" || clearScreen) resetSCreen();
   screen.textContent += number;
 }
@@ -109,27 +65,6 @@ const modulo = (a, b) => a % b;
 
 function performOperation(currentOperation, leftOperand, rightOperand) {
   let result;
-  const a = Number.parseFloat(leftOperand.replace(/,/g, '.'));
-  const b = Number.parseFloat(rightOperand.replace(/,/g, '.'));
-  switch (currentOperation) {
-    case '+':
-      result = sum(a, b);
-      break;
-    case '-':
-      result = rest(a, b);
-      break;
-    case 'x':
-      result = multiplication(a, b);
-      break;
-    case '÷':
-      result = division(a, b);
-      break;
-    case '%':
-      result = modulo(a, b);
-      break;
-    default:
-      console.log('Error');
-      
   const a = Number.parseFloat(leftOperand.replace(/,/g, "."));
   const b = Number.parseFloat(rightOperand.replace(/,/g, "."));
   switch (currentOperation) {
@@ -173,9 +108,7 @@ function handleOperation(operator) {
 }
 
 function negateNumber() {
-  const num = Number.parseFloat(screen.textContent.replace(/,/g, '.'));
   const num = Number.parseFloat(screen.textContent.replace(/,/g, "."));
-  
   if (Math.sign(num) === -1) {
     screen.textContent = setDotToComma(Math.abs(num));
   } else {
@@ -186,19 +119,7 @@ function negateNumber() {
 function resetCalculator() {
   screen.textContent = 0;
   currentOperation = null;
-
-  leftOperand = '';
-  rightOperand = '';
-  removeActive();
-}
-
   leftOperand = "";
   rightOperand = "";
   removeActive();
 }
-
-module.exports = {
-  sum,
-  rest,
-};
-
